@@ -7,6 +7,22 @@ def create_hparams(hparams_string=None, verbose=False):
 
     hparams = tf.contrib.training.HParams(
         ################################
+        # Vietnamese embedding         #
+        ################################
+        p_phone_mix=1.0,  # probability of mixing phone with letter (=1 for phone only...)
+        spell_oov=True,  # for transcirpt
+        oov_only=False,
+        word_tokenize=True,
+        phone_vn_train='dicts/phone_vn',  # required for phone embedding
+        phone_oov_train='',
+        eos='#',
+        punctuation='~,.*',
+        connect_vn='_',
+        connect_oov='-',
+        letters='aáàạãảăắằặẵẳâấầậẫẩbcdđeéèẹẽẻêếềệễểghiíìịĩỉklmnoóòọõỏôốồộỗổơớờợỡởpqrstuúùụũủưứừựữửvxyýỳỵỹỷfjzw',
+        nucleus=["aa", "ee", "ea", "oa", "aw", "ie", "uo", "a", "wa", "oo", "e", "i", "o", "u", "ow", "uw"],
+
+        ################################
         # Experiment Parameters        #
         ################################
         epochs=500,
@@ -25,15 +41,15 @@ def create_hparams(hparams_string=None, verbose=False):
         # Data Parameters             #
         ################################
         load_mel_from_disk=False,
-        training_files='filelists/ljs_audio_text_train_filelist.txt',
-        validation_files='filelists/ljs_audio_text_val_filelist.txt',
+        training_files='filelists/vn_audio_text_train_filelist.txt',
+        validation_files='filelists/vn_audio_text_val_filelist.txt',
         text_cleaners=['english_cleaners'],
 
         ################################
         # Audio Parameters             #
         ################################
         max_wav_value=32768.0,
-        sampling_rate=22050,
+        sampling_rate=16000,
         filter_length=1024,
         hop_length=256,
         win_length=1024,
@@ -81,7 +97,7 @@ def create_hparams(hparams_string=None, verbose=False):
         learning_rate=1e-3,
         weight_decay=1e-6,
         grad_clip_thresh=1.0,
-        batch_size=64,
+        batch_size=6,
         mask_padding=True  # set model's padded outputs to padded values
     )
 
